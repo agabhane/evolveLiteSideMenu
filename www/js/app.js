@@ -22,7 +22,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicCloudProvider) {
   $stateProvider
 
   .state('app', {
@@ -42,4 +42,22 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/performance');
+
+  $ionicCloudProvider.init({
+    "core": {
+      "app_id": "bf9a6b5b"
+    },
+    "push": {
+      "sender_id": "1008835547864",
+      "pluginConfig": {
+        "ios": {
+          "badge": true,
+          "sound": true
+        },
+        "android": {
+          "iconColor": "#343434"
+        }
+      }
+    }
+  });
 });

@@ -1,6 +1,6 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ionic.cloud'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, $ionicPush, $state) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -38,7 +38,19 @@ angular.module('starter.controllers', [])
     })
     .then(function(response) {
       console.log('Logged in!!!!');
+      $ionicPush.register().then(function(t) {
+        return $ionicPush.saveToken(t);
+      }).then(function(t) {
+        console.log('Token saved:', t.token);
+      });
     });
+
+  $scope.$on('cloud:push:notification', function(event, data) {
+    var msg = data.message;
+    console.log(msg.title + ': ' + msg.text);
+    //to redirect to page
+    //$state.go(data.message.payload.redirectState);
+  });
 
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
